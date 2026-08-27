@@ -1,48 +1,59 @@
-# 🌿 AI Plant Disease Detection
+# 🌱 Ekinly AI
 
-A deep learning–based plant disease classification system developed as part of a Master's thesis at Chonnam National University.
+> **AI-powered plant disease detection for smarter agriculture.**
 
-The project combines **MobileNetV2** and **EfficientNetB0** through feature-level fusion and selective fine-tuning to classify plant leaf images into **38 disease/healthy classes**.
+Ekinly AI is a deep learning–based plant disease classification application developed as part of a Master's research project at **Chonnam National University**.
+
+The system uses a hybrid **MobileNetV2 + EfficientNetB0** model with feature-level fusion to classify plant leaf images into **38 classes**. The current application is deployed as an interactive **Gradio** web app on Hugging Face Spaces and supports English, Korean, and Uzbek.
 
 ## 🚀 Live Demo
 
-**Hugging Face Space:**
-https://huggingface.co/spaces/IKROMJON01/plant-disease-detection-demo
+**[Try Ekinly AI on Hugging Face](https://huggingface.co/spaces/IKROMJON01/Ekinly-Ai)**
 
-The deployed Gradio application supports image upload, top-3 predictions, confidence scores, multilingual interaction (English / Korean / Uzbek), prediction history, statistics, and optional AI-assisted recommendations.
+The live application currently provides:
+
+- 🌿 Leaf image upload and disease prediction
+- 🔬 Top-3 predictions with confidence scores
+- 🌍 English / Korean / Uzbek interface
+- 🤖 Optional Gemini-powered agricultural advice
+- 📊 Prediction history and basic statistics
+- 📍 Browser-based location sharing prototype
+- ⚡ Gradio web interface
 
 ## 🧠 Model Architecture
 
 ```text
-                 Plant Leaf Image
-                        │
-                 Preprocessing
-                        │
-          ┌─────────────┴─────────────┐
-          │                           │
-     MobileNetV2                 EfficientNetB0
-   lightweight features          semantic features
-          │                           │
-          └───────────┬───────────────┘
-                      │
-               Feature Fusion
-                      │
-                Dense + Dropout
-                      │
-                  Softmax (38)
-                      │
-              Disease Prediction
+                    Plant Leaf Image
+                           │
+                    Image Preprocessing
+                           │
+             ┌─────────────┴─────────────┐
+             │                           │
+        MobileNetV2                EfficientNetB0
+      Lightweight Features        Semantic Features
+             │                           │
+             └─────────────┬─────────────┘
+                           │
+                    Feature Fusion
+                           │
+                      Dense Layer
+                           │
+                        Dropout
+                           │
+                     Softmax (38)
+                           │
+                  Disease Prediction
 ```
 
-### Key configuration
+### Model configuration
 
 | Component | Configuration |
 |---|---|
 | Dataset | PlantVillage |
-| Images | 54,704 |
 | Classes | 38 |
-| Input | 224 × 224 × 3 |
-| Backbones | MobileNetV2 + EfficientNetB0 |
+| Input size | 224 × 224 × 3 |
+| Backbone 1 | MobileNetV2 |
+| Backbone 2 | EfficientNetB0 |
 | Fusion | Feature-level concatenation |
 | Transfer learning | ImageNet pretrained weights |
 | Fine-tuning | Selective upper-layer fine-tuning |
@@ -50,73 +61,116 @@ The deployed Gradio application supports image upload, top-3 predictions, confid
 | Loss | Categorical Cross-Entropy |
 | Batch size | 64 |
 
-## 📊 Results
+## 📊 Performance
 
-The final fine-tuned hybrid model achieved **98.90% validation accuracy** on the PlantVillage evaluation setup used in the thesis.
+The final fine-tuned hybrid model achieved **98.90% validation accuracy** on the PlantVillage evaluation setup used in the research.
 
-The evaluation included Accuracy, Precision, Recall, F1-score, and confusion-matrix analysis.
+The research evaluation also considered **precision, recall, F1-score, and confusion-matrix analysis**.
 
-> **Important:** The 98.90% result is a validation result on the controlled PlantVillage dataset. Performance on real-world field images may be lower because of changes in lighting, background, image quality, and environmental conditions.
+> **Note:** 98.90% is a validation result on the PlantVillage dataset. Performance on field images can differ because of lighting, background, image quality, plant variety, and other real-world conditions.
+
+## 🌱 Supported Plants
+
+The current model covers the following plant categories:
+
+**Apple · Blueberry · Cherry · Corn · Grape · Orange · Peach · Pepper Bell · Potato · Raspberry · Soybean · Squash · Strawberry · Tomato**
+
+Across these categories, the model predicts **38 disease/healthy classes**.
 
 ## ✨ Application Features
 
-- 🌱 Plant disease classification from leaf images
-- 🔬 Top-3 disease predictions with confidence scores
-- 🌍 English, Korean, and Uzbek interface
-- 🤖 Optional Gemini-based AI recommendations
-- 📊 Prediction history and statistics
-- 📍 Browser geolocation prototype
-- ⚡ Gradio-based web deployment
-- ☁️ Hosted on Hugging Face Spaces
+### 🔍 Disease Detection
+
+Upload a plant leaf image and Ekinly AI returns the three highest-probability predictions with confidence scores and disease descriptions.
+
+### 🤖 AI Agricultural Advice
+
+When the Gemini API is configured through the `GEMINI_API_KEY` environment variable, the application can generate short AI-assisted advice related to the predicted condition.
+
+### 🌍 Multilingual Interface
+
+The interface supports:
+
+- 🇬🇧 English
+- 🇰🇷 Korean
+- 🇺🇿 Uzbek
+
+### 📊 History & Statistics
+
+Predictions can be stored in `diseases_data.json` and used to display recent prediction history and basic disease/plant statistics.
+
+### 📍 Location Prototype
+
+The application includes browser geolocation functionality for sharing the user's current location. The current implementation displays the location in the interface; it is a prototype for future disease-mapping functionality.
 
 ## 🛠️ Technology Stack
 
-- Python
-- TensorFlow / Keras
-- MobileNetV2
-- EfficientNetB0
-- NumPy
-- Pillow
-- OpenCV
-- Gradio
-- Google Generative AI API
-- Hugging Face Spaces
-- Google Colab
+- **Python**
+- **TensorFlow / Keras**
+- **MobileNetV2**
+- **EfficientNetB0**
+- **NumPy**
+- **Pillow**
+- **OpenCV**
+- **Gradio**
+- **Google Generative AI / Gemini**
+- **Hugging Face Spaces**
+- **Google Colab**
 
-## 📁 Repository Structure
+## 📁 Project Structure
 
 ```text
-plant_disease_detection/
-├── app.py                 # Original Flask prototype / reference implementation
-├── leaf pictures/         # Example leaf images
-├── static/
-│   └── logo.png
+Ekinly-AI/
+├── app.py
+├── proposed_hybrid_finetuned_final.keras
+├── diseases_data.json
+├── logo.png
 ├── requirements.txt
+├── LICENSE
 ├── .gitignore
 └── README.md
 ```
 
-> The current production/demo implementation is deployed and maintained in the linked Hugging Face Space. The GitHub repository is being organized as the project source/documentation repository.
+> The exact files in the repository may evolve as the project is developed. The deployed application uses the same core model and application code documented here.
 
 ## 🔬 Research Context
 
-This project is based on the Master's thesis:
+Ekinly AI is based on the Master's research project:
 
 **Hybrid Deep Learning Framework for Plant Disease Classification Using MobileNetV2 and EfficientNetB0 Feature Fusion**
 
-Department of Computer Engineering, Graduate School, Chonnam National University, 2026.
+**Department of Computer Engineering**  
+**Graduate School, Chonnam National University**  
+**2026**
+
+The project explores how complementary lightweight and efficient CNN architectures can be combined through feature fusion for plant disease classification.
 
 ## ⚠️ Limitations
 
-The model was evaluated primarily on PlantVillage, whose images are collected under controlled conditions. It should therefore be treated as a research/educational prototype rather than a substitute for professional agricultural diagnosis.
+- The model is primarily evaluated on the controlled **PlantVillage** dataset.
+- Real-world field conditions may produce lower performance.
+- Gemini advice is AI-generated and should not be treated as professional agricultural diagnosis.
+- The current GPS functionality is a prototype and does not yet provide a complete disease-spread mapping system.
+- The current application is a research/portfolio prototype rather than a production agricultural diagnostic service.
 
-Future work includes evaluation on field-collected datasets, improved domain generalization, attention mechanisms, Vision Transformers, model compression, and edge/mobile deployment.
+## 🔮 Future Direction
+
+Ekinly AI is designed with a broader smart-agriculture vision in mind. Potential future development includes:
+
+- 🌾 Field-image disease detection
+- 🛰️ Satellite and drone-based crop monitoring
+- 📈 Crop health and yield prediction
+- 🗺️ Disease distribution mapping
+- 🤖 Agricultural AI assistant
+- 📚 Retrieval-Augmented Generation (RAG) for agricultural knowledge
+- 📱 Edge/mobile model optimization
+- 🌱 Broader crop and disease coverage
 
 ## 👨‍💻 Author
 
 **Ikromjon Tojiboev**  
-Computer Engineering — Chonnam National University
+M.S. Computer Engineering, Chonnam National University
 
 ---
 
-⭐ If you find the project useful, feel free to explore the live demo and research documentation.
+⭐ **Ekinly AI** is an evolving AI-agriculture project combining deep learning, computer vision, and practical web deployment.
