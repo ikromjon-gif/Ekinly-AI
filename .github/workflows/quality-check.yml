@@ -1,0 +1,35 @@
+name: Quality Check
+
+on:
+  push:
+    branches: [main, 'audit/**']
+  pull_request:
+    branches: [main]
+
+jobs:
+  python-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Check Python syntax
+        run: python -m py_compile app.py
+      - name: Verify direct dependencies are declared
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          requirements = {
+              line.strip().split('==')[0].split('>=')[0].lower()
+              for line in Path('requirements.txt').read_text().splitlines()
+              if line.strip() and not line.strip().startswith('#')
+          }
+          required = {'gradio', 'google-generativeai', 'numpy', 'tensorflow', 'pillow'}
+          missing = sorted(required - requirements)
+          if missing:
+              raise SystemExit(f'Missing direct dependencies: {missing}')
+          print('Required direct dependencies are declared.')
+          PY
