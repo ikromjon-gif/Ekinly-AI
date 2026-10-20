@@ -1,4 +1,5 @@
-flask
+gradio
+google-generativeai
 numpy
 tensorflow
 pillow
