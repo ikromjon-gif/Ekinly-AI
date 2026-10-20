@@ -92,3 +92,42 @@ Python · TensorFlow/Keras · MobileNetV2 · EfficientNetB0 · OpenCV · Gradio 
 - Disease distribution mapping
 
 **Author:** Ikromjon Tojiboev
+
+## Run locally or with Docker
+
+### Python
+
+Use Python 3.10 and install the dependencies:
+
+```bash
+python -m venv .venv
+# Linux/macOS
+source .venv/bin/activate
+# Windows PowerShell: .venv\\Scripts\\Activate.ps1
+pip install -r requirements.txt
+python app.py
+```
+
+The app expects the trained model file `proposed_hybrid_finetuned_final.keras` in the project directory by default. Configure `MODEL_PATH` if it is mounted elsewhere. Alternatively, set `MODEL_URL` to a direct HTTPS URL for the model; the app downloads it at startup if the configured file does not already exist. Keep private or access-token-protected URLs out of source control and use deployment secrets.
+
+Optional Gemini guidance requires `GEMINI_API_KEY`. The app can be started without it, but Gemini-based advice will be unavailable.
+
+### Docker
+
+```bash
+docker build -t ekinly-ai .
+docker run --rm -p 7860:7860 \
+  -e MODEL_PATH=/models/proposed_hybrid_finetuned_final.keras \
+  -v /absolute/path/to/model-directory:/models:ro \
+  ekinly-ai
+```
+
+If using a direct model URL instead of a mounted model, pass `-e MODEL_URL=https://your-hosted-direct-model-url`. Replace the example URL and local mount path with your actual values. Configure `GEMINI_API_KEY` through your deployment platform's secret manager if needed.
+
+### Deployment notes
+
+- The trained `.keras` model is not stored in this GitHub repository. A deployment must mount it or provide a direct HTTPS `MODEL_URL`.
+- The model may be large; confirm your host's memory, disk, build-time and request-time limits before deploying.
+- Prediction history is currently stored in a local `diseases_data.json` file. Container restarts or multiple replicas may lose or split that data; use persistent storage or a database for production.
+- The included GitHub Actions workflow checks Python syntax and dependency declarations. It is not a full inference, security, or container-build test.
+- Do not commit API keys or model access tokens.
