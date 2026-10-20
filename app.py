@@ -120,7 +120,7 @@ except Exception as e:
 import urllib.request
 
 MODEL_FILE = os.environ.get("MODEL_PATH", "proposed_hybrid_finetuned_final.keras")
-MODEL_URL = os.environ.get("MODEL_URL")
+MODEL_URL = os.environ.get("MODEL_URL", "https://huggingface.co/spaces/IKROMJON01/Ekinly-Ai/resolve/main/proposed_hybrid_finetuned_final.keras")
 MODEL_LOADED = False
 model = None
 
