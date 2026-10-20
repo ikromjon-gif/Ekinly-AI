@@ -115,19 +115,34 @@ except Exception as e:
     TENSORFLOW_OK = False
 
 # ==================== MODEL ====================
-MODEL_FILE = "proposed_hybrid_finetuned_final.keras"
+# Set MODEL_PATH to a mounted/local .keras file. Alternatively set MODEL_URL
+# to a direct HTTPS download URL in the deployment environment.
+import urllib.request
+
+MODEL_FILE = os.environ.get("MODEL_PATH", "proposed_hybrid_finetuned_final.keras")
+MODEL_URL = os.environ.get("MODEL_URL")
 MODEL_LOADED = False
 model = None
+
+if not os.path.exists(MODEL_FILE) and MODEL_URL:
+    try:
+        os.makedirs(os.path.dirname(os.path.abspath(MODEL_FILE)), exist_ok=True)
+        print("⬇️ Downloading model from MODEL_URL...")
+        urllib.request.urlretrieve(MODEL_URL, MODEL_FILE)
+        print("✅ Model download complete.")
+    except Exception as e:
+        print(f"❌ Model download failed: {e}")
 
 if TENSORFLOW_OK and os.path.exists(MODEL_FILE):
     try:
         model = load_model(MODEL_FILE, compile=False)
         MODEL_LOADED = True
-        print(f"✅ Model loaded!")
+        print(f"✅ Model loaded from: {MODEL_FILE}")
     except Exception as e:
-        print(f"❌ Model error: {e}")
+        print(f"❌ Model load error: {e}")
 else:
-    print(f"❌ Model file not found: {MODEL_FILE}")
+    print(f"❌ Model file unavailable: {MODEL_FILE}")
+    print("   Configure MODEL_PATH or provide a direct HTTPS MODEL_URL.")
 
 # ==================== GEMINI (XAVFSIZ VERSIYA) ====================
 print("🔧 Loading Gemini...")
@@ -702,4 +717,4 @@ with gr.Blocks(title="🌱 Ekinly AI", theme=gr.themes.Soft(primary_hue="green")
     location_btn.click(None, None, None, js="() => { getLocation(); }")
 
 # ==================== LAUNCH ====================
-demo.launch()
+demo.launch(server_name=os.environ.get("GRADIO_SERVER_NAME", "0.0.0.0"), server_port=int(os.environ.get("GRADIO_SERVER_PORT", os.environ.get("PORT", "7860"))))
