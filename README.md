@@ -129,7 +129,7 @@ If using a direct model URL instead of a mounted model, pass `-e MODEL_URL=https
 - The trained `.keras` model is not stored in this GitHub repository. A deployment must mount it or provide a direct HTTPS `MODEL_URL`.
 - The model may be large; confirm your host's memory, disk, build-time and request-time limits before deploying.
 - Prediction history is currently stored in a local `diseases_data.json` file. Container restarts or multiple replicas may lose or split that data; use persistent storage or a database for production.
-- The included GitHub Actions workflow checks Python syntax and dependency declarations. It is not a full inference, security, or container-build test.
+- The included GitHub Actions workflow checks Python syntax, dependency declarations, and Docker image buildability. It is not a full inference or security test.
 - Do not commit API keys or model access tokens.
 
 ## MLOps and deployment readiness
