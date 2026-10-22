@@ -468,7 +468,7 @@ def predict(image, language):
         
         for i, r in enumerate(results):
             html += f'<div style="background:white;border-radius:15px;padding:15px;margin:10px 0;border-left:5px solid {colors[i]};">'
-            html += f'<div><span style="font-size:24px;">{icons[i]}</span> <strong>{r["name"]}</strong> <span style="background:{colors[i]};color:white;padding:2px 10px;border-radius:20px;float:right;">{r["prob"]}%</span></div>'
+            html += f'<div><span style="font-size:24px;">{icons[i]}</span> <strong>{r["name"]}</strong> <span style="background:{colors[i]};color:white;padding:2px 10px;border-radius:20px;float:right;">{float(r["prob"]):.2f}%</span></div>'
             html += f'<div style="background:#ddd;height:10px;margin:10px 0;"><div style="background:{colors[i]};width:{r["prob"]}%;height:10px;"></div></div>'
             html += f'<p style="font-size:13px;">📝 {r["desc"]}</p></div>'
         
