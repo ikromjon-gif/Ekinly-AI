@@ -131,3 +131,42 @@ If using a direct model URL instead of a mounted model, pass `-e MODEL_URL=https
 - Prediction history is currently stored in a local `diseases_data.json` file. Container restarts or multiple replicas may lose or split that data; use persistent storage or a database for production.
 - The included GitHub Actions workflow checks Python syntax and dependency declarations. It is not a full inference, security, or container-build test.
 - Do not commit API keys or model access tokens.
+
+## MLOps and deployment readiness
+
+### Current automated checks
+
+The GitHub Actions workflow runs on pushes to `main` and `audit/**`, and on pull requests targeting `main`. It currently checks:
+
+- Python syntax compilation for `app.py`
+- Presence of key direct dependencies in `requirements.txt`
+- Docker image build
+
+Workflow results: https://github.com/ikromjon-gif/Ekinly-AI/actions
+
+These checks confirm source-level consistency and image buildability; they do **not** prove that the hosted model downloads successfully, that TensorFlow can load the model in every deployment environment, or that inference quality is correct. Perform a real inference smoke test after deployment.
+
+### Deployment smoke-test checklist
+
+1. Confirm the service starts and the Gradio page loads.
+2. Check logs for `Model loaded from:` and ensure no `Model download failed` or `Model load error` messages appear.
+3. Upload a known leaf image and confirm that three predictions are returned.
+4. Confirm that the prediction history behaves as expected after a restart.
+5. Never place API keys or private model tokens in Git.
+
+### Operational limitations
+
+- The model is hosted separately from this repository. The default `MODEL_URL` points to the public Hugging Face Space file; set `MODEL_PATH` for a mounted model or override `MODEL_URL` when deploying elsewhere.
+- Startup requires network access if the model file is not already present.
+- Model download and TensorFlow initialization can increase cold-start time and memory usage.
+- Prediction history uses a local JSON file, which is not suitable for durable multi-replica production storage.
+- Gemini advice is optional and depends on `GEMINI_API_KEY`; core classification should be validated independently.
+- The reported 98.90% validation accuracy is from the documented PlantVillage evaluation setup, not a guarantee of field performance.
+
+### Suggested next production improvements
+
+- Add a dedicated automated inference test with a versioned sample image and expected output shape.
+- Add model checksum/version tracking and artifact provenance.
+- Move prediction history to persistent storage if durable history is required.
+- Add structured logs and service-level monitoring.
+- Evaluate on field images and measure calibration before presenting the model as a reliable diagnostic system.
