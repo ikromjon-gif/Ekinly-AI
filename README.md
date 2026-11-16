@@ -150,8 +150,43 @@ The prototype is intended to demonstrate the research workflow. It is not a cert
 
 ## Screenshots
 
-Screenshots of the dataset tables, training curves, classification metrics, confusion matrix, and web prototype are available in the research materials. To render them directly in this README, add the selected image assets to the repository (for example, under `docs/images/`) and reference them with Markdown image links.
+The following figures and interface captures are included in this repository under [`docs/screenshots/`](docs/screenshots/).
 
+### Dataset and experimental setup
+
+<p align="center">
+  <img src="docs/screenshots/plantvillage_dataset.png" alt="PlantVillage dataset summary" width="48%" />
+  <img src="docs/screenshots/training_hyperparameters.png" alt="Training hyperparameter configuration" width="48%" />
+</p>
+
+### Training behavior and model comparison
+
+<p align="center">
+  <img src="docs/screenshots/training_validation_curves.png" alt="Training and validation accuracy and loss curves" width="48%" />
+  <img src="docs/screenshots/model_performance_comparison.png" alt="Performance comparison of MobileNetV2, EfficientNetB0, hybrid, and fine-tuned hybrid models" width="48%" />
+</p>
+
+<p align="center">
+  <img src="docs/screenshots/hybrid_architecture_comparison.png" alt="Comparison of hybrid deep learning architectures reported in previous studies" width="80%" />
+</p>
+
+### Evaluation metrics and literature comparison
+
+<p align="center">
+  <img src="docs/screenshots/classification_metrics.png" alt="Overall classification metrics of the proposed fine-tuned hybrid model" width="48%" />
+  <img src="docs/screenshots/previous_studies_summary.png" alt="Summary of previous deep learning studies" width="48%" />
+</p>
+
+<p align="center">
+  <img src="docs/screenshots/thesis_comparison_table.png" alt="Comparison of the proposed method with selected previous studies from the thesis" width="90%" />
+</p>
+
+### Web application
+
+<p align="center">
+  <img src="docs/screenshots/web_app_home.png" alt="Ekinly AI plant disease detection web application home page" width="48%" />
+  <img src="docs/screenshots/web_app_prediction_results.png" alt="Ekinly AI prediction results with confidence scores" width="48%" />
+</p>
 ## Technology Stack
 
 - **Language:** Python
