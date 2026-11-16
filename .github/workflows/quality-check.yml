@@ -17,7 +17,7 @@ jobs:
         with:
           python-version: '3.10'
       - name: Check Python syntax
-        run: python -m py_compile app.py app_utils.py tests/test_app_utils.py
+        run: python -m py_compile app.py app_utils.py storage.py tests/test_app_utils.py tests/test_storage.py
       - name: Run unit tests
         run: python -m unittest discover -s tests -v
       - name: Verify direct dependencies are declared
