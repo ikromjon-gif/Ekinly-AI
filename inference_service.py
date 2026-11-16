@@ -1,7 +1,6 @@
 """Inference utilities for Ekinly AI's plant disease classifier."""
 import numpy as np
 from PIL import Image, ImageEnhance
-from tensorflow.keras.applications.efficientnet import preprocess_input
 
 
 def preprocess_image(image):
@@ -12,7 +11,7 @@ def preprocess_image(image):
     enhanced = ImageEnhance.Sharpness(enhanced).enhance(1.3)
     resized = enhanced.resize((224, 224))
     array = np.asarray(resized)
-    array = preprocess_input(array)
+    # tf.keras EfficientNet preprocess_input is a pass-through (rescaling is in-model).
     return np.expand_dims(array, axis=0)
 
 
