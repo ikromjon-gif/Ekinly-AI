@@ -15,7 +15,6 @@
 #"""
 
 import gradio as gr
-import numpy as np
 from PIL import Image
 import os
 import base64
@@ -125,16 +124,6 @@ if LOGO_BASE64:
     LOGO_HTML = f'<img src="data:image/png;base64,{LOGO_BASE64}" style="width:80px; display:block; margin:0 auto 10px auto;">'
 
 # ==================== RASMNI QAYTA ISHLASH ====================
-def enhance_image(image):
-    try:
-        enhancer = ImageEnhance.Contrast(image)
-        image = enhancer.enhance(1.2)
-        enhancer = ImageEnhance.Sharpness(image)
-        image = enhancer.enhance(1.3)
-        return image
-    except:
-        return image
-
 
 # ==================== TARJIMA ====================
 TRANSLATIONS = {
