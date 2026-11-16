@@ -28,95 +28,15 @@ from app_utils import escape_html_text
 from tensorflow.keras.applications.efficientnet import preprocess_input
 
 # ==================== JSON MA'LUMOTLAR BAZASI ====================
-DATA_FILE = "diseases_data.json"
-_DATA_LOCK = threading.RLock()
+from storage import (
+    load_data,
+    save_data,
+    save_disease_prediction,
+    get_disease_history,
+    get_statistics,
+    get_disease_locations,
+)
 
-def load_data():
-    if os.path.exists(DATA_FILE):
-        with open(DATA_FILE, "r", encoding="utf-8") as f:
-            return json.load(f)
-    return {"predictions": [], "next_id": 1}
-
-def save_data(data):
-    """Persist JSON atomically so readers never observe a partially written file."""
-    directory = os.path.dirname(os.path.abspath(DATA_FILE))
-    fd, temp_path = tempfile.mkstemp(prefix=".diseases_data-", suffix=".tmp", dir=directory)
-    try:
-        with os.fdopen(fd, "w", encoding="utf-8") as f:
-            json.dump(data, f, indent=2, ensure_ascii=False)
-            f.flush()
-            os.fsync(f.fileno())
-        os.replace(temp_path, DATA_FILE)
-    except Exception:
-        try:
-            os.unlink(temp_path)
-        except OSError:
-            pass
-        raise
-
-def save_disease_prediction(disease_name, confidence, plant_type, latitude=None, longitude=None):
-    # Serialize the read-modify-write sequence within this process to prevent
-    # ID collisions and lost updates from simultaneous Gradio prediction requests.
-    with _DATA_LOCK:
-        data = load_data()
-        new_prediction = {
-            "id": data["next_id"],
-            "disease_name": disease_name,
-            "confidence": confidence,
-            "latitude": latitude,
-            "longitude": longitude,
-            "plant_type": plant_type,
-            "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        }
-        data["predictions"].append(new_prediction)
-        data["next_id"] += 1
-        save_data(data)
-        print(f"✅ Ma'lumot saqlandi! ID: {new_prediction['id']}")
-        return new_prediction["id"]
-
-def get_disease_history(limit=50):
-    data = load_data()
-    predictions = sorted(data["predictions"], key=lambda x: x["timestamp"], reverse=True)
-    return predictions[:limit]
-
-def get_statistics():
-    data = load_data()
-    predictions = data["predictions"]
-    if not predictions:
-        return {"total": 0, "by_disease": {}, "by_plant": {}}
-    by_disease = {}
-    by_plant = {}
-    for p in predictions:
-        disease = p["disease_name"]
-        plant = p["plant_type"]
-        by_disease[disease] = by_disease.get(disease, 0) + 1
-        by_plant[plant] = by_plant.get(plant, 0) + 1
-    return {"total": len(predictions), "by_disease": by_disease, "by_plant": by_plant}
-
-def get_disease_locations():
-    data = load_data()
-    locations = []
-    for p in data["predictions"]:
-        if p.get("latitude") and p.get("longitude"):
-            locations.append({
-                "latitude": p["latitude"],
-                "longitude": p["longitude"],
-                "disease_name": p["disease_name"],
-                "confidence": p["confidence"],
-                "plant_type": p["plant_type"],
-                "timestamp": p["timestamp"]
-            })
-    return locations
-
-def get_disease_list_html():
-    history = get_disease_history(limit=20)
-    if not history:
-        return "<p>No disease reports yet.</p>"
-    html = '<div style="max-height: 300px; overflow-y: auto;"><table style="width:100%; border-collapse: collapse;"><tr style="background:#2c5e2e; color:white;"><th style="padding:8px;">Disease</th><th style="padding:8px;">Confidence</th><th style="padding:8px;">Time</th></tr>'
-    for p in history[:20]:
-        html += f'<tr style="border-bottom:1px solid #ddd;"><td style="padding:8px;">{escape_html_text(p["disease_name"])}</td><td style="padding:8px;">{escape_html_text(p["confidence"])}%</td><td style="padding:8px;">{escape_html_text(str(p["timestamp"])[:16])}</td></tr>'
-    html += '</table></div>'
-    return html
 # ==================== OPENCV ====================
 try:
     import cv2
