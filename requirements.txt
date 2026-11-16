@@ -1,6 +1,6 @@
-gradio
-google-generativeai
-numpy
-tensorflow
-pillow
-opencv-python
+gradio==4.44.1
+google-generativeai==0.8.5
+numpy==1.26.4
+tensorflow==2.15.1
+pillow==10.4.0
+opencv-python-headless==4.10.0.84
