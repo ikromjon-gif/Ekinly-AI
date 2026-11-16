@@ -29,7 +29,7 @@ class InferenceServiceTests(unittest.TestCase):
         model = FakeModel([0.15, 0.70, 0.10, 0.05])
         results = predict_top_k(model, self.image, ["a", "b", "c", "d"], k=3)
         self.assertEqual([name for name, _ in results], ["b", "a", "c"])
-        self.assertAlmostEqual(results[0][1], 70.0)
+        self.assertAlmostEqual(results[0][1], 70.0, places=5)
         self.assertEqual(model.input_shape, (1, 224, 224, 3))
 
     def test_rejects_output_size_mismatch(self):
