@@ -21,12 +21,15 @@ import os
 import base64
 import google.generativeai as genai
 import json
+import tempfile
+import threading
 from datetime import datetime
 from app_utils import escape_html_text
 from tensorflow.keras.applications.efficientnet import preprocess_input
 
 # ==================== JSON MA'LUMOTLAR BAZASI ====================
 DATA_FILE = "diseases_data.json"
+_DATA_LOCK = threading.RLock()
 
 def load_data():
     if os.path.exists(DATA_FILE):
@@ -35,25 +38,41 @@ def load_data():
     return {"predictions": [], "next_id": 1}
 
 def save_data(data):
-    with open(DATA_FILE, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2, ensure_ascii=False)
+    """Persist JSON atomically so readers never observe a partially written file."""
+    directory = os.path.dirname(os.path.abspath(DATA_FILE))
+    fd, temp_path = tempfile.mkstemp(prefix=".diseases_data-", suffix=".tmp", dir=directory)
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=2, ensure_ascii=False)
+            f.flush()
+            os.fsync(f.fileno())
+        os.replace(temp_path, DATA_FILE)
+    except Exception:
+        try:
+            os.unlink(temp_path)
+        except OSError:
+            pass
+        raise
 
 def save_disease_prediction(disease_name, confidence, plant_type, latitude=None, longitude=None):
-    data = load_data()
-    new_prediction = {
-        "id": data["next_id"],
-        "disease_name": disease_name,
-        "confidence": confidence,
-        "latitude": latitude,
-        "longitude": longitude,
-        "plant_type": plant_type,
-        "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    }
-    data["predictions"].append(new_prediction)
-    data["next_id"] += 1
-    save_data(data)
-    print(f"✅ Ma'lumot saqlandi! ID: {new_prediction['id']}")
-    return new_prediction["id"]
+    # Serialize the read-modify-write sequence within this process to prevent
+    # ID collisions and lost updates from simultaneous Gradio prediction requests.
+    with _DATA_LOCK:
+        data = load_data()
+        new_prediction = {
+            "id": data["next_id"],
+            "disease_name": disease_name,
+            "confidence": confidence,
+            "latitude": latitude,
+            "longitude": longitude,
+            "plant_type": plant_type,
+            "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        }
+        data["predictions"].append(new_prediction)
+        data["next_id"] += 1
+        save_data(data)
+        print(f"✅ Ma'lumot saqlandi! ID: {new_prediction['id']}")
+        return new_prediction["id"]
 
 def get_disease_history(limit=50):
     data = load_data()
@@ -473,7 +492,7 @@ def predict(image, language):
             html += f'<div style="background:#ddd;height:10px;margin:10px 0;"><div style="background:{colors[i]};width:{r["prob"]}%;height:10px;"></div></div>'
             html += f'<p style="font-size:13px;">📝 {r["desc"]}</p></div>'
         
-        html += f'<div style="background:linear-gradient(135deg,#1a5f7a,#0d3b4f);border-radius:15px;padding:20px;color:white;margin-top:15px;"><h3>👨‍⚕️ {t["ai_doctor"]}</h3><div>{advice.replace(chr(10),"<br>")}</div></div>'
+        html += f'<div style="background:linear-gradient(135deg,#1a5f7a,#0d3b4f);border-radius:15px;padding:20px;color:white;margin-top:15px;"><h3>👨‍⚕️ {t["ai_doctor"]}</h3><div>{escape_html_text(advice).replace(chr(10),"<br>")}</div></div>'
         html += f'<div style="text-align:center;margin-top:15px;"><p>{t["accuracy_text"]}</p></div></div>'
         
         return html
