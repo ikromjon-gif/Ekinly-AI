@@ -302,11 +302,20 @@ Use deployment secrets for API keys and private model URLs. Do not commit creden
 - The GitHub Actions workflow checks Python syntax, dependency declarations, and Docker image buildability. These checks do not constitute a full inference, model-quality, or security test.
 - After deployment, run an inference smoke test with a known leaf image and confirm that the application returns the expected prediction structure.
 
-## Research Publications
+## Research Publication
 
-**Article title:** *Fine-Tuned Hybrid Deep Learning Framework for Plant Disease Classification Using MobileNetV2 and EfficientNetB0 Feature Fusion*
+### Fine-Tuned Hybrid Deep Learning Framework for Plant Disease Classification Using MobileNetV2 and EfficientNetB0 Feature Fusion
 
-The article is based on and extends the master's thesis research. The article and thesis report the proposed model's 98.90% validation accuracy on the documented PlantVillage setup.
+**Published research article** — *Asia-Pacific Convergence Research Exchange Journal (APJCRI)*, Vol. 12, No. 9, September 2026, pp. 363–378. The journal is described as KCI-indexed in the publication announcement.
+
+The paper presents a hybrid deep learning framework combining MobileNetV2 and EfficientNetB0 through feature-level fusion and fine-tuning. The proposed framework achieved **98.90% classification accuracy** on the documented PlantVillage validation setup.
+
+| Publication resource | Link |
+|---|---|
+| KCI article page | [View article](https://lnkd.in/gqXdEBKE) |
+| DOI | [Open DOI](https://lnkd.in/g4WBKG7R) |
+| Related Ekinly AI project / video | [View project](https://lnkd.in/gJbKKXuA) |
+
 
 ## Author
 
