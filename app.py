@@ -21,8 +21,8 @@ import os
 import base64
 import google.generativeai as genai
 import json
-import html
 from datetime import datetime
+from app_utils import escape_html_text
 from tensorflow.keras.applications.efficientnet import preprocess_input
 
 # ==================== JSON MA'LUMOTLAR BAZASI ====================
@@ -95,7 +95,7 @@ def get_disease_list_html():
         return "<p>No disease reports yet.</p>"
     html = '<div style="max-height: 300px; overflow-y: auto;"><table style="width:100%; border-collapse: collapse;"><tr style="background:#2c5e2e; color:white;"><th style="padding:8px;">Disease</th><th style="padding:8px;">Confidence</th><th style="padding:8px;">Time</th></tr>'
     for p in history[:20]:
-        html += f'<tr style="border-bottom:1px solid #ddd;"><td style="padding:8px;">{html.escape(str(p["disease_name"]))}</td><td style="padding:8px;">{html.escape(str(p["confidence"]))}%</td><td style="padding:8px;">{html.escape(str(p["timestamp"])[:16])}</td></tr>'
+        html += f'<tr style="border-bottom:1px solid #ddd;"><td style="padding:8px;">{escape_html_text(p["disease_name"])}</td><td style="padding:8px;">{escape_html_text(p["confidence"])}%</td><td style="padding:8px;">{escape_html_text(str(p["timestamp"])[:16])}</td></tr>'
     html += '</table></div>'
     return html
 # ==================== OPENCV ====================
