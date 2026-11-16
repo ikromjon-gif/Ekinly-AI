@@ -1,5 +1,19 @@
 # Ekinly AI — Plant Disease Classification with Hybrid Deep Learning
 
+> **Research prototype | Computer Vision · Deep Learning · Smart Agriculture**
+
+## Professional Summary
+
+Developed a hybrid deep learning framework for plant disease classification by integrating **MobileNetV2** and **EfficientNetB0** through feature-level fusion. Evaluated the proposed model across **38 PlantVillage classes**, achieving **98.90% validation accuracy** and a **98.39% macro F1-score** in the documented validation setup. Implemented a multilingual Gradio inference prototype and deployed it on Hugging Face Spaces.
+
+<sub>Metrics are from the PlantVillage validation dataset (controlled image conditions); they do not establish field performance or production-grade diagnosis.</sub>
+
+## Key Results
+
+| Validation Accuracy | Macro F1-Score | Classes | Hybrid Parameters |
+|:---:|:---:|:---:|:---:|
+| **98.90%** | **98.39%** | **38** | **~10.3M** |
+
 > **A thesis-backed AI research and web prototype for classifying plant leaf diseases using feature-level fusion of MobileNetV2 and EfficientNetB0.**
 
 Ekinly AI is a research project developed by **Ikromjon Tojiboev** at **Chonnam National University, Republic of Korea**. The project investigates whether combining complementary visual representations from two pretrained convolutional neural networks (CNNs), followed by selective fine-tuning, can improve multi-class plant disease classification.
@@ -148,78 +162,38 @@ The prototype is intended to demonstrate the research workflow. It is not a cert
 
 **Live demo:** [Ekinly AI — Hugging Face Spaces](https://huggingface.co/spaces/IKROMJON01/Ekinly-Ai)
 
-## Screenshots
+## Project Screenshots
 
-Screenshots are organized in the same order as the project workflow: **web demo → dataset → training setup → model experiments → evaluation → literature comparison**. All images are stored in [`docs/screenshots/`](docs/screenshots/).
+The README highlights five representative visuals for a recruiter-friendly overview. Additional dataset configuration and literature-comparison figures are available in the [Research Results documentation](docs/RESEARCH_RESULTS.md).
 
-### 1. Web application demo
-
-**Home page and supported features**
+### Web application
 
 <p align="center">
   <img src="docs/screenshots/web_app_home.png" alt="Ekinly AI web application home page" width="85%" />
 </p>
 
-**Prediction results**
+### Prediction output
 
 <p align="center">
   <img src="docs/screenshots/web_app_prediction_results.png" alt="Prediction results showing top classes and confidence scores" width="85%" />
 </p>
 
-### 2. Dataset and experimental configuration
-
-**PlantVillage dataset summary**
-
-<p align="center">
-  <img src="docs/screenshots/plantvillage_dataset.png" alt="PlantVillage dataset description, image counts, and 38 classes" width="85%" />
-</p>
-
-**Training hyperparameters**
-
-<p align="center">
-  <img src="docs/screenshots/training_hyperparameters.png" alt="Hybrid model training and fine-tuning hyperparameters" width="75%" />
-</p>
-
-### 3. Model experiments and training behavior
-
-**Baseline, hybrid, and fine-tuned model performance**
+### Model experiment comparison
 
 <p align="center">
   <img src="docs/screenshots/model_performance_comparison.png" alt="Validation accuracy and loss comparison across the evaluated models" width="85%" />
 </p>
 
-**Training and validation accuracy/loss curves**
+### Training and validation curves
 
 <p align="center">
   <img src="docs/screenshots/training_validation_curves.png" alt="Accuracy and loss curves across training epochs" width="85%" />
 </p>
 
-### 4. Final model evaluation
-
-**Classification metrics**
+### Classification evaluation
 
 <p align="center">
   <img src="docs/screenshots/classification_metrics.png" alt="Accuracy, macro and weighted precision, recall, and F1-score of the proposed model" width="75%" />
-</p>
-
-### 5. Comparison with previous research
-
-**Summary of prior deep learning studies**
-
-<p align="center">
-  <img src="docs/screenshots/previous_studies_summary.png" alt="Summary table of previous deep learning studies" width="85%" />
-</p>
-
-**Comparative hybrid CNN architectures**
-
-<p align="center">
-  <img src="docs/screenshots/hybrid_architecture_comparison.png" alt="Comparison of hybrid CNN architectures reported in previous studies" width="85%" />
-</p>
-
-**Thesis comparison table and proposed method**
-
-<p align="center">
-  <img src="docs/screenshots/thesis_comparison_table.png" alt="Thesis table comparing prior studies and the proposed fine-tuned hybrid method" width="95%" />
 </p>
 
 ## Technology Stack
@@ -233,13 +207,18 @@ Screenshots are organized in the same order as the project workflow: **web demo 
 - **Deployment:** Hugging Face Spaces
 - **Training environment:** Google Colab GPU
 
-## Research Contributions
+## My Contributions
 
-1. Designed a hybrid CNN framework integrating MobileNetV2 and EfficientNetB0 through **feature-level fusion**.
-2. Applied transfer learning and selective fine-tuning to adapt pretrained feature extractors to plant disease classification.
-3. Evaluated the framework across 38 PlantVillage classes using accuracy, precision, recall, F1-score, validation loss, and confusion-matrix analysis.
-4. Compared individual backbones, the non-fine-tuned hybrid model, and the proposed fine-tuned hybrid model.
-5. Implemented a web-based prototype to demonstrate image upload and prediction with confidence scores.
+The work documented in this research project includes:
+
+- Prepared and worked with the PlantVillage dataset for a 38-class classification experiment.
+- Implemented transfer learning using ImageNet-pretrained MobileNetV2 and EfficientNetB0 CNN backbones.
+- Designed the hybrid feature-level fusion approach and classification head.
+- Conducted selective fine-tuning of the hybrid framework.
+- Evaluated model performance using accuracy, precision, recall, macro/weighted F1-score, validation loss, and confusion-matrix analysis.
+- Compared the standalone backbones, non-fine-tuned hybrid, and fine-tuned hybrid experiments.
+- Developed a multilingual Gradio prototype for image inference and deployed the demonstration on Hugging Face Spaces.
+
 
 ## Limitations and Future Work
 
@@ -316,6 +295,21 @@ The paper presents a hybrid deep learning framework combining MobileNetV2 and Ef
 | DOI | [Open DOI](https://lnkd.in/g4WBKG7R) |
 | Related Ekinly AI project / video | [View project](https://lnkd.in/gJbKKXuA) |
 
+
+## Project Links
+
+| Resource | Link |
+|---|---|
+| **Research paper** | [APJCRI article page (KCI)](https://lnkd.in/gqXdEBKE) |
+| **DOI** | [Publication DOI](https://lnkd.in/g4WBKG7R) |
+| **Master's thesis** | Thesis details are summarized in this repository; a public full-text link has not been provided here. |
+| **Live demo** | [Ekinly AI on Hugging Face Spaces](https://huggingface.co/spaces/IKROMJON01/Ekinly-Ai) |
+| **GitHub repository** | [ikromjon-gif/Ekinly-AI](https://github.com/ikromjon-gif/Ekinly-AI) |
+| **Related project/video** | [Ekinly AI project link](https://lnkd.in/gJbKKXuA) |
+
+## Technical Skills Demonstrated
+
+Python · TensorFlow / Keras · Transfer Learning · CNNs · MobileNetV2 · EfficientNetB0 · Feature Fusion · Fine-Tuning · Image Augmentation · Model Evaluation · Gradio · Hugging Face Spaces
 
 ## Author
 
