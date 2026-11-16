@@ -1,0 +1,6 @@
+gradio
+google-generativeai
+numpy
+tensorflow
+pillow
+opencv-python
