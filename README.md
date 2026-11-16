@@ -14,13 +14,11 @@ Developed a hybrid deep learning framework for plant disease classification by i
 |:---:|:---:|:---:|:---:|
 | **98.90%** | **98.39%** | **38** | **~10.3M** |
 
-> **A thesis-backed AI research and web prototype for classifying plant leaf diseases using feature-level fusion of MobileNetV2 and EfficientNetB0.**
+Ekinly AI is a research prototype developed at **Chonnam National University, Republic of Korea**. It studies feature-level fusion of two ImageNet-pretrained CNN backbones for 38-class plant disease classification.
 
-Ekinly AI is a research project developed by **Ikromjon Tojiboev** at **Chonnam National University, Republic of Korea**. The project investigates whether combining complementary visual representations from two pretrained convolutional neural networks (CNNs), followed by selective fine-tuning, can improve multi-class plant disease classification.
-
-- **Research:** *Hybrid Deep Learning Framework for Plant Disease Classification Using MobileNetV2 and EfficientNetB0 Feature Fusion*
-- **Web prototype:** [Try Ekinly AI on Hugging Face Spaces](https://huggingface.co/spaces/IKROMJON01/Ekinly-Ai)
-- **Repository:** [ikromjon-gif/Ekinly-AI](https://github.com/ikromjon-gif/Ekinly-AI)
+- **Research project:** *Hybrid Deep Learning Framework for Plant Disease Classification Using MobileNetV2 and EfficientNetB0 Feature Fusion*
+- **Live demo:** [Hugging Face Spaces](https://huggingface.co/spaces/IKROMJON01/Ekinly-Ai)
+- **Research publication:** [APJCRI article](https://lnkd.in/gqXdEBKE) · [DOI](https://lnkd.in/g4WBKG7R)
 
 ---
 
@@ -209,15 +207,17 @@ The README highlights five representative visuals for a recruiter-friendly overv
 
 ## My Contributions
 
-The work documented in this research project includes:
+Research and implementation work documented for this project:
 
-- Prepared and worked with the PlantVillage dataset for a 38-class classification experiment.
-- Implemented transfer learning using ImageNet-pretrained MobileNetV2 and EfficientNetB0 CNN backbones.
-- Designed the hybrid feature-level fusion approach and classification head.
-- Conducted selective fine-tuning of the hybrid framework.
-- Evaluated model performance using accuracy, precision, recall, macro/weighted F1-score, validation loss, and confusion-matrix analysis.
-- Compared the standalone backbones, non-fine-tuned hybrid, and fine-tuned hybrid experiments.
-- Developed a multilingual Gradio prototype for image inference and deployed the demonstration on Hugging Face Spaces.
+- Built the experimental pipeline for the PlantVillage 38-class classification task, including image preprocessing and augmentation.
+- Integrated MobileNetV2 and EfficientNetB0 feature extractors and implemented feature-level fusion with a classification head.
+- Applied transfer learning and selective fine-tuning; recorded training and validation results for individual backbones and hybrid variants.
+- Produced quantitative evaluation using accuracy, precision, recall, macro/weighted F1-score, loss curves, and confusion-matrix analysis.
+- Implemented the Gradio inference interface with top-3 predictions and multilingual UI (English, Korean, Uzbek).
+- Connected optional Gemini-based guidance and the prototype's prediction-history/statistics interface.
+- Packaged and deployed the research demonstration on Hugging Face Spaces.
+
+This list describes the documented project scope; it does not imply that every production engineering component is complete.
 
 
 ## Limitations and Future Work
