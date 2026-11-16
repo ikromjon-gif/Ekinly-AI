@@ -278,7 +278,7 @@ Use deployment secrets for API keys and private model URLs. Do not commit creden
 - The trained `.keras` model is not stored in this GitHub repository; provide it through a mounted path or configured model URL.
 - Startup may require network access when the model is downloaded, and TensorFlow initialization can increase cold-start time and memory use.
 - Prediction history is currently stored in a local `diseases_data.json` file. Container restarts or multiple replicas may lose or split this data; persistent storage or a database would be needed for durable production history.
-- The GitHub Actions workflow checks Python syntax, dependency declarations, and Docker image buildability. These checks do not constitute a full inference, model-quality, or security test.
+- GitHub Actions checks Python syntax, runs focused unit tests for the HTML escaping helper, verifies direct dependency declarations, and builds the Docker image. These checks do not constitute a full inference, model-quality, or security test.
 - After deployment, run an inference smoke test with a known leaf image and confirm that the application returns the expected prediction structure.
 
 ## Research Publication
@@ -307,7 +307,7 @@ The paper presents a hybrid deep learning framework combining MobileNetV2 and Ef
 | **GitHub repository** | [ikromjon-gif/Ekinly-AI](https://github.com/ikromjon-gif/Ekinly-AI) |
 | **Related project/video** | [Ekinly AI project link](https://lnkd.in/gJbKKXuA) |
 
-## Technical Skills Demonstrated
+## License and Security\n\nThis repository is marked **All Rights Reserved**; see [LICENSE](LICENSE). Third-party packages, datasets, pretrained weights, and research materials retain their own terms. To report a vulnerability privately, see [SECURITY.md](SECURITY.md).\n\n## Technical Skills Demonstrated
 
 Python · TensorFlow / Keras · Transfer Learning · CNNs · MobileNetV2 · EfficientNetB0 · Feature Fusion · Fine-Tuning · Image Augmentation · Model Evaluation · Gradio · Hugging Face Spaces
 
