@@ -150,43 +150,78 @@ The prototype is intended to demonstrate the research workflow. It is not a cert
 
 ## Screenshots
 
-The following figures and interface captures are included in this repository under [`docs/screenshots/`](docs/screenshots/).
+Screenshots are organized in the same order as the project workflow: **web demo → dataset → training setup → model experiments → evaluation → literature comparison**. All images are stored in [`docs/screenshots/`](docs/screenshots/).
 
-### Dataset and experimental setup
+### 1. Web application demo
 
-<p align="center">
-  <img src="docs/screenshots/plantvillage_dataset.png" alt="PlantVillage dataset summary" width="48%" />
-  <img src="docs/screenshots/training_hyperparameters.png" alt="Training hyperparameter configuration" width="48%" />
-</p>
-
-### Training behavior and model comparison
+**Home page and supported features**
 
 <p align="center">
-  <img src="docs/screenshots/training_validation_curves.png" alt="Training and validation accuracy and loss curves" width="48%" />
-  <img src="docs/screenshots/model_performance_comparison.png" alt="Performance comparison of MobileNetV2, EfficientNetB0, hybrid, and fine-tuned hybrid models" width="48%" />
+  <img src="docs/screenshots/web_app_home.png" alt="Ekinly AI web application home page" width="85%" />
 </p>
+
+**Prediction results**
 
 <p align="center">
-  <img src="docs/screenshots/hybrid_architecture_comparison.png" alt="Comparison of hybrid deep learning architectures reported in previous studies" width="80%" />
+  <img src="docs/screenshots/web_app_prediction_results.png" alt="Prediction results showing top classes and confidence scores" width="85%" />
 </p>
 
-### Evaluation metrics and literature comparison
+### 2. Dataset and experimental configuration
+
+**PlantVillage dataset summary**
 
 <p align="center">
-  <img src="docs/screenshots/classification_metrics.png" alt="Overall classification metrics of the proposed fine-tuned hybrid model" width="48%" />
-  <img src="docs/screenshots/previous_studies_summary.png" alt="Summary of previous deep learning studies" width="48%" />
+  <img src="docs/screenshots/plantvillage_dataset.png" alt="PlantVillage dataset description, image counts, and 38 classes" width="85%" />
 </p>
+
+**Training hyperparameters**
 
 <p align="center">
-  <img src="docs/screenshots/thesis_comparison_table.png" alt="Comparison of the proposed method with selected previous studies from the thesis" width="90%" />
+  <img src="docs/screenshots/training_hyperparameters.png" alt="Hybrid model training and fine-tuning hyperparameters" width="75%" />
 </p>
 
-### Web application
+### 3. Model experiments and training behavior
+
+**Baseline, hybrid, and fine-tuned model performance**
 
 <p align="center">
-  <img src="docs/screenshots/web_app_home.png" alt="Ekinly AI plant disease detection web application home page" width="48%" />
-  <img src="docs/screenshots/web_app_prediction_results.png" alt="Ekinly AI prediction results with confidence scores" width="48%" />
+  <img src="docs/screenshots/model_performance_comparison.png" alt="Validation accuracy and loss comparison across the evaluated models" width="85%" />
 </p>
+
+**Training and validation accuracy/loss curves**
+
+<p align="center">
+  <img src="docs/screenshots/training_validation_curves.png" alt="Accuracy and loss curves across training epochs" width="85%" />
+</p>
+
+### 4. Final model evaluation
+
+**Classification metrics**
+
+<p align="center">
+  <img src="docs/screenshots/classification_metrics.png" alt="Accuracy, macro and weighted precision, recall, and F1-score of the proposed model" width="75%" />
+</p>
+
+### 5. Comparison with previous research
+
+**Summary of prior deep learning studies**
+
+<p align="center">
+  <img src="docs/screenshots/previous_studies_summary.png" alt="Summary table of previous deep learning studies" width="85%" />
+</p>
+
+**Comparative hybrid CNN architectures**
+
+<p align="center">
+  <img src="docs/screenshots/hybrid_architecture_comparison.png" alt="Comparison of hybrid CNN architectures reported in previous studies" width="85%" />
+</p>
+
+**Thesis comparison table and proposed method**
+
+<p align="center">
+  <img src="docs/screenshots/thesis_comparison_table.png" alt="Thesis table comparing prior studies and the proposed fine-tuned hybrid method" width="95%" />
+</p>
+
 ## Technology Stack
 
 - **Language:** Python
