@@ -15,8 +15,6 @@
 #"""
 
 import gradio as gr
-import numpy as np
-from PIL import Image, ImageEnhance
 import os
 import base64
 import google.generativeai as genai
@@ -25,7 +23,7 @@ import tempfile
 import threading
 from datetime import datetime
 from app_utils import escape_html_text
-from tensorflow.keras.applications.efficientnet import preprocess_input
+from inference_service import predict_top_k
 
 # ==================== JSON MA'LUMOTLAR BAZASI ====================
 from storage import (
@@ -124,21 +122,7 @@ LOGO_HTML = '<div style="font-size:50px; text-align:center;">🌿</div>'
 if LOGO_BASE64:
     LOGO_HTML = f'<img src="data:image/png;base64,{LOGO_BASE64}" style="width:80px; display:block; margin:0 auto 10px auto;">'
 
-# ==================== RASMNI QAYTA ISHLASH ====================
-def enhance_image(image):
-    try:
-        enhancer = ImageEnhance.Contrast(image)
-        image = enhancer.enhance(1.2)
-        enhancer = ImageEnhance.Sharpness(image)
-        image = enhancer.enhance(1.3)
-        return image
-    except:
-        return image
-
-def preprocess_image(image):
-    enhanced = enhance_image(image)
-    resized = enhanced.resize((224, 224))
-    return resized
+# Image preprocessing and top-k inference live in inference_service.py.
 
 # ==================== TARJIMA ====================
 TRANSLATIONS = {
@@ -369,20 +353,15 @@ def predict(image, language):
         return f'<div style="text-align:center;padding:50px;background:#fee;"><h2>{t["error_model_title"]}</h2><p>{t["error_model_text"]}</p></div>'
     
     try:
-        processed = preprocess_image(image)
-        arr = np.array(processed)
-        arr = preprocess_input(arr)
-        arr = np.expand_dims(arr, axis=0)
-        pred = model.predict(arr, verbose=0)[0]
-        top3 = pred.argsort()[-3:][::-1]
-        
+        top_predictions = predict_top_k(model, image, class_names, k=3)
+
         results = []
-        for idx in top3:
-            eng_name = get_pretty_name(class_names[idx])
+        for class_name, confidence in top_predictions:
+            eng_name = get_pretty_name(class_name)
             results.append({
                 "name": translate_text(eng_name, language),
-                "prob": round(pred[idx] * 100, 2),
-                "desc": translate_description(descriptions[class_names[idx]], language)
+                "prob": round(confidence, 2),
+                "desc": translate_description(descriptions[class_name], language)
             })
         
         # Ma'lumotlarni saqlash
